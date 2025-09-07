@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Villa Margot - Restaurant Gastronomique en Bourgogne</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #722f37, #8b1538);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f4e4c1;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover {
+            color: #f4e4c1;
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(114, 47, 55, 0.8), rgba(139, 21, 56, 0.8)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%23722f37" width="1200" height="800"/><path fill="%234a1f26" d="M0 400c200-100 400-50 600 0s400 100 600 0v400H0z"/><circle cx="300" cy="200" r="50" fill="%23f4e4c1" opacity="0.1"/><circle cx="900" cy="600" r="80" fill="%23f4e4c1" opacity="0.1"/></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1rem;
+            color: #f4e4c1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 35px;
+            background: #f4e4c1;
+            color: #722f37;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .btn:hover {
+            background: #e6d4a7;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Section Styles */
+        .section {
+            padding: 6rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3.5rem;
+            color: #722f37;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: #722f37;
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+
+        /* About Section */
+        .about {
+            background: white;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #555;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-image {
+            background: linear-gradient(135deg, #722f37, #8b1538);
+            height: 450px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/><circle cx="20" cy="20" r="1" fill="white" opacity="0.1"/><circle cx="80" cy="30" r="1.5" fill="white" opacity="0.1"/></svg>');
+        }
+
+        /* Menu Section */
+        .menu {
+            background: #f8f6f3;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .menu-item {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #722f37, #8b1538);
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .menu-item h3 {
+            color: #722f37;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            font-family: Georgia, serif;
+        }
+
+        .menu-item p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .price {
+            color: #8b1538;
+            font-weight: bold;
+            font-size: 1.6rem;
+            position: absolute;
+            top: 2rem;
+            right: 2.5rem;
+            background: #f4e4c1;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Wine Section */
+        .wines {
+            background: linear-gradient(135deg, #722f37, #8b1538);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wines::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle cx="50" cy="50" r="20" fill="white" opacity="0.05"/><circle cx="150" cy="150" r="30" fill="white" opacity="0.05"/></svg>');
+        }
+
+        .wines .section-title {
+            color: #f4e4c1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wines .section-title::after {
+            background: #f4e4c1;
+        }
+
+        .wine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .wine-card {
+            background: rgba(255,255,255,0.15);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .wine-card:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-10px);
+        }
+
+        .wine-card h3 {
+            color: #f4e4c1;
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            font-family: Georgia, serif;
+        }
+
+        .wine-card p {
+            line-height: 1.7;
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        /* Reservation Section */
+        .reservation {
+            background: white;
+            text-align: center;
+        }
+
+        .reservation-form {
+            max-width: 700px;
+            margin: 0 auto;
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .form-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group.full {
+            grid-template-columns: 1fr;
+        }
+
+        input, select, textarea {
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #722f37;
+        }
+
+        .form-btn {
+            background: #722f37;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .form-btn:hover {
+            background: #8b1538;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c1810;
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer h3 {
+            color: #f4e4c1;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .footer p {
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menu-item, .wine-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .menu-item:nth-child(2) { animation-delay: 0.2s; }
+        .menu-item:nth-child(3) { animation-delay: 0.4s; }
+        .menu-item:nth-child(4) { animation-delay: 0.6s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .hero p {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 2.5rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .form-group {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: 4rem 0;
+            }
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .loading {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">Villa Margot</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#accueil">Accueil</a></li>
+                    <li><a href="#about">À Propos</a></li>
+                    <li><a href="#menu">Notre Carte</a></li>
+                    <li><a href="#vins">Vins de Bourgogne</a></li>
+                    <li><a href="#reservation">Réservations</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+                <button class="mobile-menu">☰</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="accueil" class="hero">
+        <div class="hero-content">
+            <h1>Villa Margot</h1>
+            <p>Gastronomie Authentique au Cœur de la Bourgogne</p>
+            <a href="#reservation" class="btn">Réserver une Table</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about loading">
+        <div class="container">
+            <h2 class="section-title">Notre Histoire</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Nichée au cœur des vignobles bourguignons, Villa Margot vous accueille dans un cadre d'exception où tradition culinaire et innovation se rencontrent harmonieusement.</p>
+                    <p>Notre chef, passionné par les produits du terroir, vous propose une cuisine raffinée qui sublime les saveurs authentiques de la Bourgogne. Chaque plat raconte l'histoire de notre région et de ses producteurs dévoués.</p>
+                    <p>Venez découvrir une expérience gastronomique unique dans notre villa du 18ème siècle, restaurée avec soin pour préserver son charme d'antan tout en offrant le confort moderne.</p>
+                </div>
+                <div class="about-image">
+                    <span>🏛️ Villa du 18ème siècle</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section menu loading">
+        <div class="container">
+            <h2 class="section-title">Nos Spécialités</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="price">18€</div>
+                    <h3>Escargots de Bourgogne</h3>
+                    <p>Six escargots à l'ail et au persil, beurre aux herbes de Provence, accompagnés de pain grillé artisanal de notre boulanger local.</p>
+                </div>
+                <div class="menu-item">
+                    <div class="price">32€</div>
+                    <h3>Bœuf Bourguignon</h3>
+                    <p>Mijoté 24h au Pinot Noir de nos vignerons partenaires, légumes de saison et pommes grenaille du marché de Beaune.</p>
+                </div>
+                <div class="menu-item">
+                    <div class="price">28€</div>
+                    <h3>Coq au Vin de Bourgogne</h3>
+                    <p>Cuisse de coq fermier Label Rouge, sauce au vin rouge, champignons des bois et lardons fumés de notre charcutier.</p>
+                </div>
+                <div class="menu-item">
+                    <div class="price">16€</div>
+                    <h3>Époisses Affiné</h3>
+                    <p>Fromage AOP accompagné de pain aux noix maison et confiture de figues de Provence, sélection de notre maître fromager.</p>
+                </div>
+                <div class="menu-item">
+                    <div class="price">24€</div>
+                    <h3>Saumon de Loire</h3>
+                    <p>Filet de saumon sauvage, sauce beurre blanc au Chablis, légumes croquants et pommes de terre nouvelles.</p>
+                </div>
+                <div class="menu-item">
+                    <div class="price">22€</div>
+                    <h3>Tarte Tatin Maison</h3>
+                    <p>Pommes caramélisées de nos vergers, pâte feuilletée croustillante, glace vanille de Madagascar artisanale.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Wine Section -->
+    <section id="vins" class="section wines loading">
+        <div class="container">
+            <h2 class="section-title">Notre Cave d'Exception</h2>
+            <div class="wine-grid">
+                <div class="wine-card">
+                    <h3>🍷 Chablis Premier Cru</h3>
+                    <p>Vin blanc sec aux arômes minéraux subtils et notes d'agrumes, parfait accompagnement de nos poissons et fruits de mer.</p>
+                </div>
+                <div class="wine-card">
+                    <h3>🍷 Gevrey-Chambertin</h3>
+                    <p>Pinot Noir d'exception aux tanins soyeux et notes de fruits rouges, l'accompagnement idéal de nos viandes rouges.</p>
+                </div>
+                <div class="wine-card">
+                    <h3>🍷 Meursault</h3>
+                    <p>Chardonnay élégant aux notes beurrées et vanillées, sublimant parfaitement nos plats à base de volaille.</p>
+                </div>
+                <div class="wine-card">
+                    <h3>🍷 Nuits-Saint-Georges</h3>
+                    <p>Rouge puissant et généreux aux arômes complexes, véritable symbole de notre terroir bourguignon authentique.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservation" class="section reservation loading">
+        <div class="container">
+            <h2 class="section-title">Réservez votre Table</h2>
+            <form class="reservation-form" onsubmit="handleReservation(event)">
+                <div class="form-group">
+                    <input type="text" placeholder="Prénom" required>
+                    <input type="text" placeholder="Nom" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" placeholder="Email" required>
+                    <input type="tel" placeholder="Téléphone" required>
+                </div>
+                <div class="form-group">
+                    <input type="date" required>
+                    <select required>
+                        <option value="">Heure souhaitée</option>
+                        <option value="19:00">19h00</option>
+                        <option value="19:30">19h30</option>
+                        <option value="20:00">20h00</option>
+                        <option value="20:30">20h30</option>
+                        <option value="21:00">21h00</option>
+                        <option value="21:30">21h30</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <select required>
+                        <option value="">Nombre de personnes</option>
+                        <option value="1">1 personne</option>
+                        <option value="2">2 personnes</option>
+                        <option value="3">3 personnes</option>
+                        <option value="4">4 personnes</option>
+                        <option value="5">5 personnes</option>
+                        <option value="6">6 personnes</option>
+                        <option value="7">7 personnes</option>
+                        <option value="8+">8+ personnes</option>
+                    </select>
+                    <select>
+                        <option value="">Occasion spéciale</option>
+                        <option value="anniversaire">Anniversaire</option>
+                        <option value="anniversaire-mariage">Anniversaire de mariage</option>
+                        <option value="business">Dîner d'affaires</option>
+                        <option value="romantique">Dîner romantique</option>
+                        <option value="famille">Repas de famille</option>
+                    </select>
+                </div>
+                <div class="form-group full">
+                    <textarea placeholder="Demandes particulières, allergies ou remarques" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn form-btn">Confirmer la Réservation</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h3>Villa Margot</h3>
+                    <p>12 Rue des Vignerons<br>
+                    21200 Beaune, Bourgogne<br>
+                    France</p>
+                </div>
+                <div>
+                    <h3>Contact</h3>
+                    <p>Tél: +33 3 80 22 44 66<br>
+                    Email: contact@villamargot.fr<br>
+                    Réservations: reservation@villamargot.fr</p>
+                </div>
+                <div>
+                    <h3>Horaires</h3>
+                    <p>Mardi - Samedi: 19h00 - 23h00<br>
+                    Dimanche: 12h00 - 15h00<br>
+                    Fermé le Lundi</p>
+                </div>
+            </div>
+            <p>&copy; 2025 Villa Margot. Tous droits réservés. | Site créé avec passion pour l'art culinaire bourguignon.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Form submission handler
+        function handleReservation(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            
+            // Show success message
+            alert('Merci pour votre réservation ! Nous vous confirmerons par email dans les plus brefs délais.\n\nVous recevrez un email de confirmation à l\'adresse indiquée.');
+            
+            // Reset form
+            event.target.reset();
+            
+            // In a real application, you would send this data to a server
+            console.log('Reservation submitted:', Object.fromEntries(formData));
+        }
+
+        // Loading animation trigger
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.loading').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (basic implementation)
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+
+        // Set minimum date for reservation to today
+        document.addEventListener('DOMContentLoaded', function() {
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.setAttribute('min', today);
+            }
+        });
+    </script>
+</body>
+</html>
